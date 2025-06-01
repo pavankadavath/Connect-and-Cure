@@ -3,7 +3,7 @@ const Notification = require("../models/notificationModel");
 // Fetch all notifications for the logged-in user
 const getallnotifs = async (req, res) => {
   try {
-    const userId = req.locals.userId; // Ensure `userId` is properly extracted from `req.locals`
+    const userId = req.user.userId; // Ensure `userId` is properly extracted from `req.user`
     const notifs = await Notification.find({ userId }).sort({ createdAt: -1 }); // Sorted by most recent
     res.status(200).json(notifs);
   } catch (error) {

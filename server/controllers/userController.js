@@ -54,15 +54,18 @@ const register = async (req, res) => {
   try {
     const { firstname, lastname, email, password, pic } = req.body;
 
+    // Validate required fields
+    if (!firstname || !lastname || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+    console.log("h")
     // Check if email already exists
     const emailPresent = await User.findOne({ email });
     if (emailPresent) {
       return res.status(400).json({ message: "Email already exists" });
     }
-
     // Hash the password
     const hashedPass = await bcrypt.hash(password, 10);
-
     // Create the user
     const user = new User({
       firstname,
@@ -71,7 +74,11 @@ const register = async (req, res) => {
       password: hashedPass,
       pic: pic || "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     });
-
+    if(user){
+      console.log("User created successfully:", user);
+    }else{
+      console.log("User creation failed");
+    }
     const result = await user.save();
 
     if (!result) {

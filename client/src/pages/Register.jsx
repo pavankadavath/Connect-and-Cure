@@ -58,10 +58,10 @@ function Register() {
     try {
       e.preventDefault();
       if (loading) return;
-      if (file === "") return;
+      // if (file === "") return;
       
       const { firstname, lastname, email, password, confpassword ,pic} = formDetails;
-      console.log("pic ",pic)
+      // console.log("pic ",pic)
       const userPic = pic || "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"; // Use the default if pic is empty
       if (!firstname || !lastname || !email || !password || !confpassword) {
         return toast.error("Input field should not be empty");
@@ -79,24 +79,28 @@ function Register() {
         return toast.error("Passwords do not match");
       }
 
-      (await toast.promise(
-        axios.post("/user/register", {
+        
+      try {
+        const response = await axios.post("/user/register", {
           firstname,
           lastname,
           email,
           password,
-          pic:userPic,
-        }),
-        {
-          pending: "Registering user...",
-          success: "User registered successfully",
-          error: "Unable to register user ",
-          loading: "Registering user...",
+          pic: userPic,
+        });
+        toast.success("User registered successfully");
+        console.log(response);
+        return navigate("/login");
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error("Unable to register user");
         }
-      ));
-      return navigate("/login");
+        // console.error(error);
+      }
     } catch (error) {
-      console.error(`Error  ${error}`)
+      console.error(`Error  ${error} message ${error.message}`);
     }
   };
 

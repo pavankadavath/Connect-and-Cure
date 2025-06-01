@@ -53,7 +53,7 @@ const Navbar = () => {
               <li>
                 <NavLink to={"/notifications"}>Notifications</NavLink>
               </li>
-              {token && !user.isAdmin && user.isDoctor &&(
+              {token && !user.isAdmin && !user.isDoctor &&(
                 <li>
                   <NavLink to={"/applyfordoctor"}>Apply for doctor</NavLink>
                 </li>

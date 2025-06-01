@@ -42,7 +42,7 @@ const bookappointment = async (req, res) => {
     const noti=await usernotification.save();
     // console.log(usernotification)
     const result = await appointment.save();
-    return res.status(201).send(result,noti);
+    return res.status(201).send({result,noti});
   } catch (error) {
     console.log("error", error);
     res.status(500).send("Unable to book appointment");

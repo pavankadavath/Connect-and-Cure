@@ -110,18 +110,18 @@ const BookAppointment = ({ setModalOpen, ele }) => {
           ),
           
           // Post notification
-          axios.post(
-            "/notification/postnotification",
-            {
-              content: `Appointment Booked with Dr. ${ele?.userId?.firstname} ${ele?.userId?.lastname} on ${formDetails.date} at ${formDetails.time}`,
-              userId: ele?.userId?._id // Make sure this matches your notification schema
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              }
-            }
-          )
+          // axios.post(
+          //   "/notification/postnotification",
+          //   {
+          //     content: `Appointment Booked with Dr. ${ele?.userId?.firstname} ${ele?.userId?.lastname} on ${formDetails.date} at ${formDetails.time}`,
+          //     userId: ele?.userId?._id // Make sure this matches your notification schema
+          //   },
+          //   {
+          //     headers: {
+          //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+          //     }
+          //   }
+          // )
         ]),
         {
           success: "Appointment booked successfully",
